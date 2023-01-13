@@ -1,11 +1,18 @@
 import random
-secret = int(random.randint(1, 10)) #1에서 10 사이의 정수가 임의로 발생
-guess = int(random.randint(1, 10))
-print(guess, secret)
 
-if guess < secret:
-    print('too low')
-elif guess > secret:
-    print('too high')
-elif guess == secret:
-    print('just right')
+small = bool(random.getrandbits(1))
+green = bool(random.getrandbits(1))
+
+print(small, green)
+
+if small:
+    if green:
+        print('pea, 완두콩은 작고 녹색이다')
+    else :
+        print('cherry, 체리는 작고 녹색이 아니다')
+
+else :
+    if green:
+        print('watermelon, 수박은 크고 녹색이다')
+    else :
+        print('pumpkin, 호박은 크고 녹색이 아니다')
