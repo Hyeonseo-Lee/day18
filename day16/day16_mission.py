@@ -1,6 +1,4 @@
-import random
 
-## 함수 선언 부분 ##
 def stack_full() :
 	global SIZE, stack, top
 	if (top >= SIZE-1) :
@@ -37,27 +35,39 @@ def peek() :
 		return None
 	return stack[top]
 
-## 전역 변수 선언 부분 ##
-SIZE = 10
+
+SIZE = 100
 stack = [ None for _ in range(SIZE) ]
 top = -1
 
-## 메인 코드 부분 ##
+
 if __name__ == "__main__" :
 
-	stonearray = ["빨강", "파랑", "초록", "노랑", "보라", "주황"]
-	random.shuffle(stonearray)
+	with open("진달래꽃.txt", 'r', encoding='UTF8') as rfp :
+		lineAry = rfp.readlines()
 
-	print("과자집에 가는길 : ", end = ' ')
-	for stone in stonearray :
-		push(stone)
-		print(stone, "-->", end = ' ')
-	print("과자집")
+	print("----- 원본 -----")
+	for line in lineAry :
+		push(line)
+		print(line, end = ' ')
+	print()
 
-	print("우리집에 오는길 : ", end = ' ')
+	print("----- 거꾸로 처리된 결과 -----")
 	while True :
-		stone = pop()
-		if stone == None :
+		line = pop()
+		if line == None :
 			break
-		print(stone, "-->", end = ' ')
-	print("우리집")
+
+		m_stack = [None for _ in range(len(line))]
+		m_top = -1
+
+		for ch in line :
+			m_top += 1
+			m_stack[m_top] = ch
+
+		while True :
+			if m_top == -1 :
+				break
+			ch = m_stack[m_top]
+			m_top -= 1
+			print(ch, end = ' ')
