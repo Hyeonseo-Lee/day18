@@ -1,45 +1,63 @@
+import random
 
-class Node2() :
-	def __init__ (self) :
-		self.plink = None
-		self.data = None
-		self.nlink = None
+## 함수 선언 부분 ##
+def stack_full() :
+	global SIZE, stack, top
+	if (top >= SIZE-1) :
+		return True
+	else :
+		return False
 
-def print_node(start):
-	current = start
-	if current.nlink == None :
+def stack_empty() :
+	global SIZE, stack, top
+	if (top == -1) :
+		return True
+	else :
+		return False
+
+def push(data) :
+	global SIZE, stack, top
+	if (stack_full()) :
 		return
-	print("정방향 --> ", end=' ')
-	print(current.data, end=' ')
-	while current.nlink != None:
-		current = current.nlink
-		print(current.data, end=' ')
-	print()
-	print("역방향 --> ", end=' ')
-	print(current.data, end=' ')
-	while current.plink != None:
-		current = current.plink
-		print(current.data, end=' ')
+	top += 1
+	stack[top] = data
 
+def pop() :
+	global SIZE, stack, top
+	if (stack_empty()) :
+		return None
+	data = stack[top]
+	stack[top] = None
+	top -= 1
+	return data
 
-memory = []
-head, current, pre = None, None, None
-darray = ["꼬부기", "파이리", "피카츄", "사나", "지효"]
+def peek() :
+	global SIZE, stack, top
+	if (stack_empty()) :
+		return None
+	return stack[top]
 
+## 전역 변수 선언 부분 ##
+SIZE = 10
+stack = [ None for _ in range(SIZE) ]
+top = -1
 
+## 메인 코드 부분 ##
 if __name__ == "__main__" :
 
-	node = Node2()
-	node.data = darray[0]
-	head = node
-	memory.append(node)
+	stonearray = ["빨강", "파랑", "초록", "노랑", "보라", "주황"]
+	random.shuffle(stonearray)
 
-	for data in darray[1:] :
-		pre = node
-		node = Node2()
-		node.data = data
-		pre.nlink = node
-		node.plink = pre
-		memory.append(node)
+	print("과자집에 가는길 : ", end = ' ')
+	for stone in stonearray :
+		push(stone)
+		print(stone, "-->", end = ' ')
+	print("과자집")
 
-	print_node(head)
+	print("우리집에 오는길 : ", end = ' ')
+	while True :
+		stone = pop()
+		if stone == None :
+			break
+		print(stone, "-->", end = ' ')
+	print("우리집")
